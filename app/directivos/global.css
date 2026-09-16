@@ -1,0 +1,122 @@
+/* Título de la sección */
+h1 {
+    text-align: center;
+    color: #1f3f5b;
+    font-family: Arial, sans-serif;
+    font-size: 42px;
+    margin: 40px 0 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Línea decorativa debajo del título */
+h1::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #2b5d8a;
+    margin: 12px auto 0;
+    border-radius: 10px;
+}
+
+ /* Contenedor general */
+.Directivos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+}
+
+/* Tarjeta del directivo */
+.directivo-card {
+    width: 320px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+
+    /* Sombra */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+    /* Borde */
+    border: 2px solid #2b5d8a;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto al pasar el mouse */
+.directivo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+/* Contenedor de la foto */
+.foto-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Imagen */
+.foto-container img {
+    width: 130px;
+    height: 130px;
+
+    /* Hace la imagen circular */
+    border-radius: 50%;
+
+    /* Hace que no se deforme */
+    object-fit: cover;
+
+    /* Marco lindo */
+    border: 5px solid #2b5d8a;
+    padding: 4px;
+    background: white;
+
+    /* Sombra de la foto */
+    box-shadow: 0 5px 15px rgba(43, 93, 138, 0.35);
+}
+
+/* Nombre */
+.directivo-info h3 {
+    margin: 10px 0 5px;
+    color: #1f3f5b;
+    font-size: 23px;
+    font-family: Arial, sans-serif;
+}
+
+/* Cargo */
+.cargo {
+    display: inline-block;
+    color: white;
+    background: #2b5d8a;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Información de contacto */
+.contacto {
+    margin-top: 20px;
+    color: #555;
+    font-size: 14px;
+}
+
+.contacto p {
+    margin: 8px 0;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 700px) {
+    .Directivos {
+        flex-direction: column;
+    }
+
+    .directivo-card {
+        width: 280px;
+    }
+}

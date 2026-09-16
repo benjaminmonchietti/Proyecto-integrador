@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+
+    background: linear-gradient(135deg, #dff6ff, #8ed8f8, #4bb9e8);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+}
+
+
+
+h1 {
+    color: #075985;
+    font-size: 36px;
+    margin-bottom: 35px;
+    text-align: center;
+
+    letter-spacing: 1px;
+}
+
+
+
+h2 {
+    color: #164e63;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+
+    text-align: center;
+}
+
+
+
+input {
+    width: 300px;
+    padding: 13px 15px;
+
+    border: 2px solid #7dd3fc;
+    border-radius: 10px;
+
+    background-color: white;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.3s;
+
+    margin-bottom: 8px;
+}
+
+input:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 8px rgba(2, 132, 199, 0.3);
+}
+
+
+
+button {
+    display: block;
+
+    margin: 8px auto 20px;
+
+    padding: 11px 28px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #0284c7;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0369a1;
+
+    transform: scale(1.05);
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+
+#mensaje2 {
+    margin-top: 15px;
+
+    color: #075985;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+
+h1,
+h2,
+input,
+button,
+#mensaje2 {
+    position: relative;
+}
+
+
+body::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 570px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border-radius: 25px;
+
+    box-shadow: 0 15px 40px rgba(0, 80, 120, 0.25);
+
+    z-index: -1;
+}
+
+
+
+@media (max-width: 500px) {
+
+    body {
+        padding: 20px;
+    }
+
+    body::before {
+        width: 90%;
+        height: 560px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    input {
+        width: 90%;
+    }
+
+    button {
+        padding: 10px 25px;
+    }
+}
