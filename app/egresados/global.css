@@ -170,8 +170,6 @@ body {
 }
 
 
-
-
 .tarjeta-promocion {
     background: white;
 
@@ -223,7 +221,9 @@ body {
     transition: transform 0.5s ease;
 }
 
-.tarjeta-promocion:hover
+.tarjeta-promocion {
+    width: 100%;
+}
 .imagen-contenedor img {
     transform: scale(1.04);
 }
@@ -497,31 +497,27 @@ footer p {
     .nombres {
         grid-template-columns: 1fr;
     }
+
+
 .btn-volver {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
 
-    background-color: #7c3aed;
+    padding: 10px 18px;
+
+    background: #168acb;
     color: white;
 
-    padding: 10px 20px;
-    border-radius: 9px;
-
     text-decoration: none;
-    font-size: 18px;
-    font-weight: 500;
 
-    position: absolute;
-    top: 25px;
-    right: 7%;
+    border-radius: 8px;
 
-    transition: background-color 0.2s ease;
+    transition: 0.3s;
 }
 
 .btn-volver:hover {
-    background-color: #6d28d9;
-    color: white;
+    background: #0e6597;
+    transform: translateY(-2px);
 }
 }

@@ -3,6 +3,25 @@ import "../directivos/global.css";
 export default function Directivos() {
   return (
     <>
+
+            {/* ENCABEZADO */}
+        <header className="header">
+          <div className="logo">
+          </div>
+          <div className="logo-icon">
+          </div>
+          
+
+          <div>
+              <h2>ProA Despeñaderos</h2>
+              <span>Escuela Experimental</span>
+          </div>
+
+          <a href="../" className="btn-volver">
+            Volver
+          </a>
+
+        </header>
       <div>
         <h1>Directivos</h1>
       </div>
@@ -13,7 +32,7 @@ export default function Directivos() {
 
           <div className="foto-container">
             <img
-              src="/img/ana.jpeg"
+              src="/images/ana.jpeg"
               alt="Ana Ines Urban"
             />
           </div>
