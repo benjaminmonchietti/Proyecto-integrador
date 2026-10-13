@@ -1,0 +1,636 @@
+
+/* ============================
+   ESTILOS GENERALES
+============================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6fa;
+    color: #333;
+}
+
+.directivos-page {
+    min-height: 100vh;
+    background: #f3f6fa;
+}
+
+/* ============================
+   ENCABEZADO
+============================ */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 7%;
+    background: #fff;
+    border-bottom: 1px solid #dce5ee;
+    box-shadow: 0 3px 15px rgba(31, 63, 91, 0.07);
+}
+
+.logo-escuela {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+}
+
+.logo-letra {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #1f3f5b;
+    color: #fff;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.logo-texto strong {
+    color: #1f3f5b;
+    font-size: 18px;
+}
+
+.logo-texto small {
+    color: #718096;
+    font-size: 12px;
+}
+
+/* BOTÓN VOLVER */
+
+.btn-volver {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #168acb;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.btn-volver:hover {
+    background: #0e6597;
+    transform: translateY(-2px);
+}
+
+/* ============================
+   PRESENTACIÓN
+============================ */
+
+.directivos-intro {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 65px 25px 45px;
+    text-align: center;
+}
+
+.intro-etiqueta {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: #168acb;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.directivos-intro h1 {
+    margin: 0 0 20px;
+    color: #1f3f5b;
+    font-size: 42px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.directivos-intro h1::after {
+    content: "";
+    display: block;
+    width: 75px;
+    height: 4px;
+    margin: 14px auto 0;
+    border-radius: 10px;
+    background: #2b8dcc;
+}
+
+.directivos-intro p {
+    max-width: 680px;
+    margin: 0 auto;
+    color: #68788b;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.intro-linea {
+    display: none;
+}
+
+/* ============================
+   CONTENEDOR DE TARJETAS
+============================ */
+
+.directivos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 28px;
+    width: 86%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-bottom: 55px;
+}
+
+/* ============================
+   TARJETAS
+============================ */
+
+.directivo-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e0e8f0;
+    border-radius: 18px;
+    box-shadow: 0 7px 25px rgba(31, 63, 91, 0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.directivo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 32px rgba(31, 63, 91, 0.13);
+}
+
+/* ============================
+   FOTO E INFORMACIÓN
+============================ */
+
+.directivo-superior {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+    background: linear-gradient(135deg, #fff, #f0f7fd);
+    border-bottom: 1px solid #e8eef5;
+}
+
+.foto-container {
+    width: 110px;
+    height: 120px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #e5eef7;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 13px rgba(31, 63, 91, 0.15);
+}
+
+.foto-container img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.directivo-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.cargo {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 7px 12px;
+    border-radius: 7px;
+    background: #e5f3fd;
+    color: #216b9f;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.directivo-info h2 {
+    margin: 0;
+    color: #1f3f5b;
+    font-size: 21px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.directivo-descripcion {
+    margin: 9px 0 0;
+    color: #7a8797;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ============================
+   FUNCIONES PRINCIPALES
+============================ */
+
+.directivo-funciones {
+    flex: 1;
+    padding: 25px;
+}
+
+.directivo-funciones h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 18px;
+    color: #1f3f5b;
+    font-size: 16px;
+}
+
+.directivo-funciones h3::before {
+    content: "";
+    width: 4px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: #168acb;
+}
+
+.directivo-funciones ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.directivo-funciones li {
+    position: relative;
+    margin-bottom: 14px;
+    padding-left: 24px;
+    color: #58697d;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.directivo-funciones li:last-child {
+    margin-bottom: 0;
+}
+
+.directivo-funciones li::before {
+    content: "✓";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #e5f3fd;
+    color: #168acb;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* ============================
+   CONTACTO
+============================ */
+
+.directivo-contacto {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    width: 100%;
+    min-width: 0;
+    padding: 22px 25px 25px;
+    background: #f8fafc;
+    border-top: 1px solid #e5ebf2;
+}
+
+.directivo-contacto h3 {
+    display: block;
+    margin: 0 0 5px;
+    color: #1f3f5b;
+    font-size: 16px;
+}
+
+/* Enlaces de teléfono y correo */
+
+.directivo-contacto a {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    color: #38526f;
+    font-size: 13px;
+    line-height: 1.5;
+    text-decoration: none;
+    white-space: normal !important;
+    overflow: visible;
+    transition: color 0.2s ease;
+}
+
+.directivo-contacto a:hover {
+    color: #168acb;
+}
+
+/* Iconos */
+
+.directivo-contacto .contacto-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    border-radius: 10px;
+    background: #e5f3fd;
+    color: #216b9f;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Contenedor del texto */
+
+.directivo-contacto a > span:last-child {
+    display: flex !important;
+    flex: 1 1 0;
+    flex-direction: column !important;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+    max-width: 100%;
+    overflow: visible;
+    white-space: normal !important;
+}
+
+/* Etiquetas Teléfono y Correo electrónico */
+
+.directivo-contacto a small {
+    display: block !important;
+    margin: 0;
+    color: #8995a5;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* Fuerza el ajuste de números y correos largos */
+
+.directivo-contacto a > span:last-child > span {
+    display: block !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    color: #24364b;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+}
+
+/* ============================
+   MENSAJE FINAL
+============================ */
+
+.directivos-cierre {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 25px 65px;
+    text-align: center;
+}
+
+.directivos-cierre h2 {
+    margin: 0 0 15px;
+    color: #1f3f5b;
+    font-size: 25px;
+}
+
+.directivos-cierre p {
+    margin: 0;
+    color: #68788b;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* ============================
+   PIE DE PÁGINA
+============================ */
+
+.directivos-footer {
+    padding: 23px;
+    background: #1f3f5b;
+    text-align: center;
+}
+
+.directivos-footer p {
+    margin: 0;
+    color: #e4edf6;
+    font-size: 12px;
+}
+
+/* ============================
+   TABLETS
+============================ */
+
+@media (max-width: 850px) {
+    .directivos-grid {
+        width: 92%;
+        gap: 20px;
+    }
+
+    .directivo-superior {
+        gap: 14px;
+        padding: 20px;
+    }
+
+    .foto-container {
+        width: 90px;
+        height: 100px;
+    }
+
+    .directivo-info h2 {
+        font-size: 18px;
+    }
+
+    .directivo-funciones,
+    .directivo-contacto {
+        padding: 21px;
+    }
+}
+
+/* ============================
+   CELULARES
+============================ */
+
+@media (max-width: 620px) {
+    .header {
+        padding: 14px 5%;
+        gap: 12px;
+    }
+
+    .logo-letra {
+        width: 40px;
+        height: 40px;
+        font-size: 21px;
+    }
+
+    .logo-texto strong {
+        font-size: 14px;
+    }
+
+    .logo-texto small {
+        font-size: 11px;
+    }
+
+    .btn-volver {
+        padding: 10px 12px;
+        font-size: 11px;
+    }
+
+    .directivos-intro {
+        padding: 48px 22px 35px;
+    }
+
+    .directivos-intro h1 {
+        font-size: 34px;
+    }
+
+    .directivos-intro p {
+        font-size: 14px;
+    }
+
+    .directivos-grid {
+        grid-template-columns: minmax(0, 1fr);
+        width: 91%;
+        max-width: 440px;
+        gap: 22px;
+    }
+
+    .directivo-superior {
+        gap: 17px;
+        padding: 22px;
+    }
+
+    .foto-container {
+        width: 95px;
+        height: 105px;
+    }
+
+    .directivo-info h2 {
+        font-size: 19px;
+    }
+
+    .directivo-funciones {
+        padding: 23px;
+    }
+
+    .directivo-funciones li {
+        font-size: 13px;
+    }
+
+    .directivo-contacto {
+        padding: 22px;
+    }
+
+    .directivo-contacto a > span:last-child > span {
+        font-size: 13px;
+    }
+
+    .directivos-cierre {
+        padding: 0 23px 45px;
+    }
+
+    .directivos-cierre h2 {
+        font-size: 22px;
+    }
+}
+
+/* ============================
+   CELULARES PEQUEÑOS
+============================ */
+
+@media (max-width: 380px) {
+    .header {
+        flex-wrap: wrap;
+    }
+
+    .btn-volver {
+        margin-left: auto;
+    }
+
+    .directivo-superior {
+        gap: 12px;
+        padding: 17px;
+    }
+
+    .foto-container {
+        width: 78px;
+        height: 90px;
+    }
+
+    .directivo-info h2 {
+        font-size: 16px;
+    }
+
+    .directivo-contacto {
+        padding: 18px;
+    }
+
+    .directivo-contacto a {
+        gap: 9px;
+    }
+
+    .directivo-contacto .contacto-icono {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+    }
+    ```css
+.directivo-contacto a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.directivo-contacto .contacto-dato {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.directivo-contacto .contacto-dato > span {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+
+}
