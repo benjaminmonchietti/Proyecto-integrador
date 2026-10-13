@@ -208,12 +208,16 @@ function App() {
 
                 <div className="submenu-content">
 
-                  <a href="/iniciosesion">
-                    Iniciar sesión
+                  <a href="/iniciosesion/botones">
+                    Inicio sesión
                   </a>
 
                   <a href="/crearsesion">
                     Crear sesión
+                  </a>
+                  
+                  <a href="/registrarse">
+                    Registrarse
                   </a>
 
                 </div>

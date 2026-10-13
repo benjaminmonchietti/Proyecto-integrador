@@ -13,13 +13,13 @@ export default function InicioSesion() {
 
   return (
     <>
-      <h1>INICIAR SESION</h1>
+      <h1>REGISTRARSE</h1>
 
       <h2>ingrese su mail</h2>
 
       <input
         type="text"
-        id="...@gmail.com"
+        id="...@escuelasproa.edu.ar"
       />
 
       <h2>ingresar contraseña</h2>
