@@ -330,11 +330,9 @@ body {
     font-size: 16px;
 }
 
-/* Enlaces de teléfono y correo */
-
 .directivo-contacto a {
-    display: flex !important;
-    flex-direction: row !important;
+    display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 12px;
     width: 100%;
@@ -345,16 +343,13 @@ body {
     font-size: 13px;
     line-height: 1.5;
     text-decoration: none;
-    white-space: normal !important;
-    overflow: visible;
+    white-space: normal;
     transition: color 0.2s ease;
 }
 
 .directivo-contacto a:hover {
     color: #168acb;
 }
-
-/* Iconos */
 
 .directivo-contacto .contacto-icono {
     display: flex;
@@ -370,44 +365,83 @@ body {
     font-weight: bold;
 }
 
-/* Contenedor del texto */
-
+.directivo-contacto .contacto-dato,
 .directivo-contacto a > span:last-child {
-    display: flex !important;
+    display: flex;
     flex: 1 1 0;
-    flex-direction: column !important;
+    flex-direction: column;
     align-items: flex-start;
     gap: 4px;
     min-width: 0;
     max-width: 100%;
-    overflow: visible;
-    white-space: normal !important;
+    white-space: normal;
 }
 
-/* Etiquetas Teléfono y Correo electrónico */
-
 .directivo-contacto a small {
-    display: block !important;
+    display: block;
     margin: 0;
     color: #8995a5;
     font-size: 11px;
     line-height: 1.4;
 }
 
-/* Fuerza el ajuste de números y correos largos */
-
 .directivo-contacto a > span:last-child > span {
-    display: block !important;
+    display: block;
     width: 100%;
     max-width: 100%;
     min-width: 0;
     color: #24364b;
     font-size: 13px;
     line-height: 1.6;
-    white-space: normal !important;
-    overflow-wrap: anywhere !important;
-    word-break: break-word !important;
-    overflow: visible !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* ============================
+   BOTÓN DE ACCESO DE DIRECCIÓN
+============================ */
+
+/* ============================
+   BOTONES DE ACCESO Y REGRESO
+============================ */
+
+.btn-acceso-directora,
+.btn-volver-planificacion {
+    display: inline-block;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 9px;
+    background: #b4232f;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-acceso-directora {
+    display: block;
+    width: calc(100% - 50px);
+    margin: 20px 25px 25px;
+}
+
+.btn-acceso-directora:hover,
+.btn-volver-planificacion:hover {
+    background: #8f1823;
+}
+
+.btn-volver-planificacion {
+    margin: 16px;
+}
+
+.btn-acceso-directora:focus-visible,
+.btn-volver-planificacion:focus-visible {
+    outline: 3px solid #8cccf0;
+    outline-offset: 3px;
 }
 
 /* ============================
@@ -477,6 +511,11 @@ body {
     .directivo-funciones,
     .directivo-contacto {
         padding: 21px;
+    }
+
+    .btn-acceso-directora {
+        width: calc(100% - 42px);
+        margin: 20px 21px 21px;
     }
 }
 
@@ -558,6 +597,11 @@ body {
         font-size: 13px;
     }
 
+    .btn-acceso-directora {
+        width: calc(100% - 44px);
+        margin: 20px 22px 22px;
+    }
+
     .directivos-cierre {
         padding: 0 23px 45px;
     }
@@ -607,30 +651,9 @@ body {
         height: 32px;
         flex-basis: 32px;
     }
-    ```css
-.directivo-contacto a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-width: 0;
-  text-decoration: none;
-}
 
-.directivo-contacto .contacto-dato {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
-}
-
-.directivo-contacto .contacto-dato > span {
-  display: block;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  white-space: normal;
-}
-
+    .btn-acceso-directora {
+        width: calc(100% - 36px);
+        margin: 18px 18px 18px;
+    }
 }

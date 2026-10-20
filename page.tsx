@@ -1,5 +1,9 @@
 
-import "../directivos/global.css";
+"use client";
+
+import "./global.css";
+import Direc from "./direc";
+import { useState } from "react";
 
 const directivos = [
   {
@@ -10,10 +14,10 @@ const directivos = [
       "Dirigir y organizar el funcionamiento general de la institución.",
       "Coordinar al equipo docente y acompañar sus tareas.",
       "Promover una educación de calidad y una buena convivencia escolar.",
-      "Mantener el vínculo entre la escuela, las familias y la comunidad."
+      "Mantener el vínculo entre la escuela, las familias y la comunidad.",
     ],
     telefono: "3513077563",
-    email: "aiurban@escuelasproa.edu.ar"
+    email: "aiurban@escuelasproa.edu.ar",
   },
   {
     nombre: "Gabriela Nieva Rodríguez",
@@ -23,10 +27,10 @@ const directivos = [
       "Acompañar a los estudiantes durante la jornada escolar.",
       "Registrar y realizar el seguimiento de la asistencia.",
       "Colaborar con la organización de las actividades escolares.",
-      "Orientar a los estudiantes y favorecer la convivencia."
+      "Orientar a los estudiantes y favorecer la convivencia.",
     ],
     telefono: "3518196993",
-    email: "gdlnievasrodriguez@escuelasproa.edu.ar"
+    email: "gdlnievasrodriguez@escuelasproa.edu.ar",
   },
   {
     nombre: "Natalia María Rodríguez",
@@ -36,10 +40,10 @@ const directivos = [
       "Acompañar a los estudiantes durante la jornada escolar.",
       "Registrar y realizar el seguimiento de la asistencia.",
       "Colaborar con la organización de las actividades escolares.",
-      "Orientar a los estudiantes y favorecer la convivencia."
+      "Orientar a los estudiantes y favorecer la convivencia.",
     ],
     telefono: "3547560972",
-    email: "nmrodriguez@escuelasproa.edu.ar"
+    email: "nmrodriguez@escuelasproa.edu.ar",
   },
   {
     nombre: "Itatí Carranza",
@@ -49,10 +53,10 @@ const directivos = [
       "Coordinar actividades y proyectos institucionales.",
       "Colaborar en la organización y planificación escolar.",
       "Facilitar la comunicación entre los integrantes de la escuela.",
-      "Realizar el seguimiento de las tareas y propuestas de su área."
+      "Realizar el seguimiento de las tareas y propuestas de su área.",
     ],
     telefono: "3547526692",
-    email: "micarranza@escuelasproa.edu.ar"
+    email: "micarranza@escuelasproa.edu.ar",
   },
   {
     nombre: "Yanina Adán",
@@ -62,27 +66,43 @@ const directivos = [
       "Organizar y mantener actualizada la documentación escolar.",
       "Gestionar trámites y tareas administrativas.",
       "Colaborar con la elaboración y el registro de documentación institucional.",
-      "Brindar información administrativa a las familias y al personal."
+      "Brindar información administrativa a las familias y al personal.",
     ],
     telefono: "3547463670",
-    email: "yadan@escuelasproa.edu.ar"
-  }
+    email: "yadan@escuelasproa.edu.ar",
+  },
 ];
 
 export default function Directivos() {
+  const [mostrarPlanificacion, setMostrarPlanificacion] = useState(false);
+
+  if (mostrarPlanificacion) {
+    return (
+      <div>
+        <button
+          type="button"
+          className="btn-volver-planificacion"
+          onClick={() => setMostrarPlanificacion(false)}
+        >
+          ← Volver a los directivos
+        </button>
+        <Direc />
+      </div>
+    );
+  }
+
   return (
     <div className="directivos-page">
       <header className="header">
-        <a href="../" className="logo-escuela">
+        <a href="/" className="logo-escuela">
           <span className="logo-letra">P</span>
-
           <span className="logo-texto">
             <strong>ProA Despeñaderos</strong>
             <small>Escuela Experimental</small>
           </span>
         </a>
 
-        <a href="../" className="btn-volver">
+        <a href="/" className="btn-volver">
           <span aria-hidden="true">←</span>
           Volver al inicio
         </a>
@@ -90,28 +110,19 @@ export default function Directivos() {
 
       <main>
         <section className="directivos-intro">
-          <span className="intro-etiqueta">
-            NUESTRA INSTITUCIÓN
-          </span>
-
+          <span className="intro-etiqueta">NUESTRA INSTITUCIÓN</span>
           <h1>Equipo directivo</h1>
-
           <p>
-            Conocé a las personas que forman parte de nuestra
-            institución, sus responsabilidades y el trabajo
-            que realizan cada día para acompañar a nuestra
-            comunidad educativa.
+            Conocé a las personas que forman parte de nuestra institución,
+            sus responsabilidades y el trabajo que realizan cada día para
+            acompañar a nuestra comunidad educativa.
           </p>
-
-          <div className="intro-linea"></div>
+          <div className="intro-linea" />
         </section>
 
         <section className="directivos-grid">
           {directivos.map((persona) => (
-            <article
-              className="directivo-card"
-              key={persona.nombre}
-            >
+            <article className="directivo-card" key={persona.nombre}>
               <div className="directivo-superior">
                 <div className="foto-container">
                   <img
@@ -122,12 +133,8 @@ export default function Directivos() {
                 </div>
 
                 <div className="directivo-info">
-                  <span className="cargo">
-                    {persona.cargo}
-                  </span>
-
+                  <span className="cargo">{persona.cargo}</span>
                   <h2>{persona.nombre}</h2>
-
                   <p className="directivo-descripcion">
                     Área de gestión y acompañamiento institucional
                   </p>
@@ -136,7 +143,6 @@ export default function Directivos() {
 
               <div className="directivo-funciones">
                 <h3>Funciones principales</h3>
-
                 <ul>
                   {persona.funciones.map((funcion, indice) => (
                     <li key={indice}>{funcion}</li>
@@ -144,13 +150,11 @@ export default function Directivos() {
                 </ul>
               </div>
 
-              {/* CONTACTO */}
               <div className="directivo-contacto">
                 <h3>Contacto</h3>
 
                 <a href={`tel:${persona.telefono}`}>
                   <span className="contacto-icono">T</span>
-
                   <span className="contacto-dato">
                     <small>Teléfono</small>
                     <span>{persona.telefono}</span>
@@ -159,25 +163,32 @@ export default function Directivos() {
 
                 <a href={`mailto:${persona.email}`}>
                   <span className="contacto-icono">@</span>
-
                   <span className="contacto-dato">
                     <small>Correo electrónico</small>
                     <span>{persona.email}</span>
                   </span>
                 </a>
               </div>
+
+              {persona.cargo === "Directora" && (
+                <button
+                  type="button"
+                  className="btn-acceso-directora"
+                  onClick={() => setMostrarPlanificacion(true)}
+                >
+                  Ingresar
+                </button>
+              )}
             </article>
           ))}
         </section>
 
         <section className="directivos-cierre">
           <h2>Una comunidad que crece en equipo</h2>
-
           <p>
-            Cada integrante cumple un papel importante en la
-            construcción de una escuela comprometida con el
-            aprendizaje, la participación y el desarrollo
-            de sus estudiantes.
+            Cada integrante cumple un papel importante en la construcción
+            de una escuela comprometida con el aprendizaje, la participación
+            y el desarrollo de sus estudiantes.
           </p>
         </section>
       </main>
@@ -188,4 +199,3 @@ export default function Directivos() {
     </div>
   );
 }
-
