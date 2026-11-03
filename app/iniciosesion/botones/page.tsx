@@ -8,7 +8,6 @@ const router = useRouter();
 
 return <main className="pagina-usuarios"> <h1>SELECCIONAR USUARIO</h1>
 
-```
   <p className="subtitulo-usuarios">
     Seleccioná el tipo de usuario para continuar
   </p>
