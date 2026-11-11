@@ -211,6 +211,13 @@ function App() {
                   <a href="/iniciosesion/botones">
                     Inicio sesión
                   </a>
+<<<<<<< HEAD
+=======
+
+                  <a href="/crearsesion">
+                    Crear sesión
+                  </a>
+>>>>>>> 9799abfac7cdc8bc5b4d9879a4eb74cdbdfff2e6
                   
                   <a href="/registrarse">
                     Registrarse
