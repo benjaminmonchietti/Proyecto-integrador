@@ -1,0 +1,60 @@
+.pagina-usuarios {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 30px 20px;
+background: #f3f5fa;
+font-family: Arial, sans-serif;
+}
+
+.pagina-usuarios h1 {
+color: #26356b;
+text-align: center;
+font-size: 32px;
+margin-bottom: 12px;
+}
+
+.subtitulo-usuarios {
+color: #555;
+text-align: center;
+margin-bottom: 35px;
+font-size: 17px;
+}
+
+.contenedor-botones {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 20px;
+width: 100%;
+max-width: 650px;
+}
+
+.contenedor-botones button {
+min-height: 110px;
+padding: 20px;
+border: none;
+border-radius: 14px;
+background: #344b91;
+color: white;
+font-size: 19px;
+font-weight: bold;
+cursor: pointer;
+transition: background 0.2s, transform 0.2s;
+}
+
+.contenedor-botones button:hover {
+background: #24366e;
+transform: translateY(-3px);
+}
+
+@media (max-width: 500px) {
+.contenedor-botones {
+grid-template-columns: 1fr;
+}
+
+.pagina-usuarios h1 {
+font-size: 26px;
+}
+}

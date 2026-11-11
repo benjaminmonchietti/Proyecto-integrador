@@ -1,0 +1,105 @@
+
+.registro-fondo {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 16px;
+  background: linear-gradient(135deg, #e9e5ff, #f5f7ff, #dcecff);
+  font-family: Arial, sans-serif;
+}
+
+.registro-tarjeta {
+  width: 100%;
+  max-width: 440px;
+  padding: 35px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 10px 35px rgba(40, 35, 90, 0.15);
+}
+
+.registro-tarjeta h1 {
+  margin: 0;
+  text-align: center;
+  color: #196aad;
+  font-size: 28px;
+}
+
+.registro-descripcion {
+  margin: 12px 0 28px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.registro-tarjeta form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.registro-tarjeta label {
+  margin-top: 8px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.registro-tarjeta input,
+.registro-tarjeta select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 1px solid #a3c0ec;
+  border-radius: 8px;
+  background: white;
+  color: #222;
+  font-size: 15px;
+  outline: none;
+}
+
+.registro-tarjeta input:focus,
+.registro-tarjeta select:focus {
+  border-color: #4090d1;
+  box-shadow: 0 0 0 3px rgba(3, 28, 43, 0.12);
+}
+
+.registro-tarjeta button {
+  margin-top: 20px;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #196aad;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.registro-tarjeta button:hover {
+  background: #196aad;
+}
+
+.registro-mensaje {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f0edff;
+  color: #196aad;
+  text-align: center;
+  font-size: 14px;
+}
+
+.registro-pie {
+  margin: 25px 0 0;
+  color: #888;
+  text-align: center;
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .registro-tarjeta {
+    padding: 25px 20px;
+  }
+}

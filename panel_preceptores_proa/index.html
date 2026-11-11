@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Panel de Preceptores | Gestión Institucional</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><img class="proa-logo" src="logo.jpg" alt="Logo de Colegios PROA"><div><strong>Colegios PROA</strong><span>Gestión institucional</span></div></div>
+  <div class="menu-label">PANEL DE PRECEPTORES</div>
+  <nav class="nav" aria-label="Navegación principal">
+    <button class="nav-item active" data-page="inicio"><span>⌂</span> Inicio</button>
+    <button class="nav-item" data-page="estudiantes"><span>♙</span> Estudiantes</button>
+    <button class="nav-item" data-page="asistencia"><span>✓</span> Asistencia</button>
+    <button class="nav-item" data-page="comunicados"><span>✉</span> Comunicados</button>
+    <button class="nav-item" data-page="emails"><span>＠</span> Emails a familias</button>
+    <button class="nav-item" data-page="informes"><span>▤</span> Informes</button>
+  </nav>
+  <div class="sidebar-footer"><div class="avatar">C</div><div><strong>Preceptoría</strong><span>Gestión de preceptoría</span></div></div>
+</aside>
+<main class="main">
+  <header class="topbar"><button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button><div class="breadcrumb">Institución <span>/</span> <strong id="currentPage">Inicio</strong></div><div class="topbar-right"><span class="status-dot"></span> Panel de preceptoría</div></header>
+  <div class="content">
+    <section class="page active" id="page-inicio">
+      <div class="welcome"><div><p class="eyebrow">PANEL INSTITUCIONAL</p><h1>Bienvenida, Preceptora</h1><p>Gestioná las tareas de la institución desde un solo lugar.</p></div><div class="date-box"><span>Fecha de hoy</span><strong id="today"></strong></div></div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon blue">♙</div><span>Estudiantes registrados</span><strong id="totalStudents">0</strong><small>En el sistema local</small></div>
+        <div class="stat-card"><div class="stat-icon green">✓</div><span>Presentes hoy</span><strong id="totalPresent">0</strong><small>Asistencia registrada</small></div>
+        <div class="stat-card"><div class="stat-icon orange">!</div><span>Ausentes hoy</span><strong id="totalAbsent">0</strong><small>Asistencia registrada</small></div>
+        <div class="stat-card"><div class="stat-icon purple">✉</div><span>Comunicados</span><strong id="totalNews">0</strong><small>Publicaciones guardadas</small></div>
+      </div>
+      <div class="section-heading"><div><h2>Accesos rápidos</h2><p>Elegí una tarea para comenzar.</p></div></div>
+      <div class="quick-grid">
+        <button class="quick-card" data-go="estudiantes"><span class="quick-icon blue">♙</span><strong>Estudiantes</strong><span>Agregar y consultar estudiantes.</span><b>Ingresar →</b></button>
+        <button class="quick-card" data-go="asistencia"><span class="quick-icon green">✓</span><strong>Asistencia</strong><span>Registrar presentes y ausentes.</span><b>Ingresar →</b></button>
+        <button class="quick-card" data-go="comunicados"><span class="quick-icon orange">✉</span><strong>Comunicados</strong><span>Publicar novedades de la institución.</span><b>Ingresar →</b></button>
+        <button class="quick-card" data-go="informes"><span class="quick-icon purple">▤</span><strong>Informes</strong><span>Consultar y exportar reportes.</span><b>Ingresar →</b></button>
+      </div>
+      <div class="panel"><h2>Acerca de este panel</h2><p class="muted">Versión de demostración: los datos se guardan en este navegador. Para que funcione entre varias computadoras se necesita conectar un backend y una base de datos con inicio de sesión y permisos.</p></div>
+    </section>
+    <section class="page" id="page-estudiantes">
+      <div class="page-heading"><div><p class="eyebrow">ADMINISTRACIÓN</p><h1>Estudiantes</h1><p>Administrá el listado institucional.</p></div><button class="btn btn-primary" id="openStudent">+ Agregar estudiante</button></div>
+      <div class="panel"><div class="course-tabs" id="studentCourseTabs" aria-label="Filtrar estudiantes por curso"></div><div class="toolbar"><input type="search" id="studentSearch" placeholder="Buscar por nombre, DNI o curso" aria-label="Buscar estudiantes"><div class="toolbar-actions"><button class="btn btn-light" id="exportStudents">Exportar CSV</button></div></div><div class="table-wrap"><table><thead><tr><th>Nombre completo</th><th>DNI</th><th>Curso</th><th>Email familiar</th><th>Acciones</th></tr></thead><tbody id="studentsBody"></tbody></table></div></div>
+    </section>
+    <section class="page" id="page-asistencia">
+      <div class="page-heading"><div><p class="eyebrow">CONTROL DE ASISTENCIA</p><h1>Asistencia por curso</h1><p>Seleccioná un año, marcá la asistencia de cada estudiante y cada cambio se guarda automáticamente.</p></div></div>
+      <div class="panel"><div class="section-heading"><div><h2>Seleccionar curso</h2><p>Cada año tiene su propia lista y su propio registro.</p></div></div><div class="course-tabs" id="attendanceCourseTabs" aria-label="Cursos disponibles"></div><div class="filters"><label>Fecha de asistencia<input type="date" id="attendanceDate"></label><label>Curso seleccionado<select id="attendanceCourse" aria-label="Curso"></select></label></div></div>
+      <div class="panel"><div class="section-heading"><div><p class="eyebrow" id="attendanceCourseLabel">1.º AÑO</p><h2>Planilla de asistencia</h2><p id="attendanceCourseDetail">Seleccioná el estado de cada estudiante.</p></div><button class="btn btn-light" id="markAllPresent">Marcar todos presentes</button></div><div class="attendance-summary" id="attendanceSummary"></div><div class="toolbar"><input type="search" id="attendanceSearch" placeholder="Buscar estudiante dentro del curso" aria-label="Buscar estudiante"><div class="toolbar-actions"><button class="btn btn-light" id="printAttendance">Imprimir planilla</button><button class="btn btn-primary" id="saveAttendance">Confirmar registros del curso</button></div></div><div class="table-wrap"><table><thead><tr><th>N.º</th><th>Estudiante</th><th>Estado de asistencia</th></tr></thead><tbody id="attendanceBody"></tbody></table></div><p class="hint" id="attendanceSaveHint">Guardado automático activado: cada cambio se guarda inmediatamente en este navegador.</p></div>
+    </section>
+    <section class="page" id="page-comunicados">
+      <div class="page-heading"><div><p class="eyebrow">COMUNICACIÓN</p><h1>Comunicados</h1><p>Creá y consultá avisos institucionales.</p></div></div>
+      <div class="panel"><h2>Nuevo comunicado</h2><form id="newsForm" class="form-grid" style="margin-top:18px"><label>Título<input name="title" required maxlength="120" placeholder="Título del comunicado"></label><label>Tipo<select name="type"><option>General</option><option>Familias</option><option>Estudiantes</option><option>Docentes</option><option>Urgente</option></select></label><label class="full-width">Contenido<textarea name="content" required rows="5" placeholder="Escribí el comunicado..."></textarea></label><div class="form-actions full-width"><button class="btn btn-primary" type="submit">Publicar comunicado</button></div></form></div>
+      <div class="panel"><h2>Comunicados publicados</h2><div id="newsList"></div></div>
+    </section>
+    <section class="page" id="page-emails">
+      <div class="page-heading"><div><p class="eyebrow">COMUNICACIÓN CON LAS FAMILIAS</p><h1>Emails a familias</h1><p>Prepará un correo para una familia o para las familias de un curso.</p></div></div>
+      <div class="panel"><h2>Enviar correo a un curso</h2>
+        <p class="muted">Completá los correos familiares en Estudiantes. Se abrirá tu aplicación de correo con los destinatarios en copia oculta (CCO).</p>
+        <form id="familyEmailForm" class="form-grid" style="margin-top:18px">
+          <label>Curso<select id="emailCourse" name="course"><option value="1">1.º año</option><option value="2">2.º año</option><option value="3">3.º año</option><option value="4">4.º año</option><option value="5">5.º año</option><option value="6">6.º año</option></select></label>
+          <label>Asunto<input name="subject" required maxlength="150" placeholder="Asunto del correo"></label>
+          <label class="full-width">Mensaje<textarea name="message" required rows="6" placeholder="Escribí el mensaje para las familias..."></textarea></label>
+          <div class="form-actions full-width"><button class="btn btn-primary" type="submit">Abrir correo para las familias</button></div>
+        </form>
+        <p class="hint">Esta versión abre el programa de correo configurado en la computadora; no envía mensajes sin revisión. La preceptora debe revisar y presionar Enviar.</p>
+      </div>
+      <div class="panel"><h2>Correos familiares registrados</h2><div class="table-wrap"><table><thead><tr><th>Estudiante</th><th>Curso</th><th>Correo familiar</th><th>Acción</th></tr></thead><tbody id="familyEmailsBody"></tbody></table></div></div>
+    </section>
+    <section class="page" id="page-informes">
+      <div class="page-heading"><div><p class="eyebrow">ESTADÍSTICAS</p><h1>Informes institucionales</h1><p>Resumen de estudiantes, asistencia y comunicados.</p></div><button class="btn btn-primary" onclick="window.print()">Imprimir / Guardar PDF</button></div>
+      <div class="panel"><h2>Reporte general</h2><p class="report-summary" id="reportDate"></p><div id="reportContent"></div></div>
+    </section>
+    <footer class="footer">Panel de Gestión Institucional · PROA Despeñaderos · Versión de demostración</footer>
+  </div>
+</main>
+</div>
+<dialog class="modal" id="studentModal"><h2 id="modalTitle">Agregar estudiante</h2><p class="muted">Completá los datos del estudiante.</p><form id="studentForm" class="form-grid" style="margin-top:20px"><input type="hidden" name="id"><label>Nombre y apellido<input name="name" required maxlength="100"></label><label>DNI<input name="dni" inputmode="numeric" pattern="[0-9]{7,9}" title="Ingresá entre 7 y 9 números"></label><label class="full-width">Curso<select name="course" required><option value="1">1.º año</option><option value="2">2.º año</option><option value="3">3.º año</option><option value="4">4.º año</option><option value="5">5.º año</option><option value="6">6.º año</option></select></label><div class="form-actions full-width"><button type="button" class="btn btn-light" id="cancelStudent">Cancelar</button><button class="btn btn-primary" type="submit">Guardar estudiante</button></div></form></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script src="script.js"></script>
+</body></html>
