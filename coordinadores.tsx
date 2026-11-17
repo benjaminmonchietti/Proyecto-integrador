@@ -1,4 +1,7 @@
 
+"use client";
+
+
 import "./coordinadores.css";
 
 export default function Coordinadores() {
@@ -21,7 +24,7 @@ export default function Coordinadores() {
             <a href="#rol">El rol</a>
             <a href="#tareas">Responsabilidades</a>
             <a href="#documentacion">Documentación</a>
-            <a className="nav-documents" href="carga-documentos.html">
+            <a className="nav-documents" href="actas.tsx">
               Cargar actas ↗
             </a>
           </nav>
@@ -51,7 +54,7 @@ export default function Coordinadores() {
 
               <a
                 className="button button-outline"
-                href="carga-documentos.html"
+                href="actas.tsx"
               >
                 Ir a la carga de documentos{" "}
                 <span aria-hidden="true">→</span>
@@ -211,7 +214,7 @@ export default function Coordinadores() {
 
             <a
               className="button button-light"
-              href="carga-documentos.html"
+              href="actas.tsx"
             >
               Ir a la carga de documentos{" "}
               <span aria-hidden="true">→</span>

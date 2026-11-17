@@ -583,7 +583,7 @@ a {
 
     .intro-panel {
         padding: 30px;
-    }
+    }npm run dev
 
     .cards-grid {
         grid-template-columns: 1fr;
