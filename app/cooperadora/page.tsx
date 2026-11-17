@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+import "../cooperadora/global.css";
 <nav>
     <Link href="/cooperadora">Cooperadora</Link>
     <Link href="/">Productos</Link>
@@ -7,7 +10,6 @@
 
 "use client";
 
-import "../cooperadora/global.css";
 
 export default function Cooperadora() {
   return (

@@ -1,120 +1,86 @@
 
-
 .alumnos {
   min-height: 100vh;
-  padding: 32px 6%;
-  background: linear-gradient(180deg, #eef8ff, #ffffff);
+  padding: 45px 7%;
+  background: linear-gradient(180deg, #eff9ff, #ffffff);
   color: #193b5b;
   font-family: Arial, sans-serif;
 }
 
-.alumnos-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #d9eaf6;
-}
-
-.alumnos-logo {
-  display: grid;
-  place-items: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  background: #168dcc;
-  color: white;
-  font-size: 27px;
-}
-
-.alumnos-header h1 {
-  margin: 0;
-  font-size: 23px;
-}
-
-.alumnos-header p,
-.alumnos-bienvenida p {
-  color: #617d98;
-}
-
 .alumnos-bienvenida {
-  padding: 42px 0 28px;
+  margin-bottom: 40px;
 }
 
-.alumnos-bienvenida > span {
+.alumnos-bienvenida span {
   color: #168dcc;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   letter-spacing: 2px;
 }
 
-.alumnos-bienvenida h2 {
+.alumnos-bienvenida h1 {
+  font-size: 38px;
   margin: 12px 0;
-  font-size: clamp(28px, 4vw, 38px);
 }
 
-.alumnos-cuenta {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 12px 16px;
-  border: 1px solid #d9eaf6;
-  border-radius: 10px;
-  background: white;
-  overflow-wrap: anywhere;
+.alumnos-bienvenida p {
+  color: #617d98;
 }
 
 .alumnos-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  gap: 22px;
 }
 
 .alumnos-card {
-  padding: 24px;
-  text-align: left;
-  color: #193b5b;
   background: white;
+  padding: 27px;
   border: 1px solid #d9eaf6;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 17px;
+  transition: 0.2s;
 }
 
 .alumnos-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px #193b5b14;
-  border-color: #168dcc;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px #193b5b18;
 }
 
 .alumnos-icono {
-  font-size: 32px;
+  font-size: 34px;
 }
 
-.alumnos-card h3 {
-  margin-bottom: 8px;
+.alumnos-card h2 {
+  font-size: 21px;
+  margin: 15px 0 8px;
 }
 
 .alumnos-card p {
   color: #617d98;
-  line-height: 1.5;
 }
 
-.alumnos-ver {
-  color: #087fbd;
+.alumnos-boton {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 11px 18px;
+  background: #168dcc;
+  color: white;
+  text-decoration: none;
+  border-radius: 9px;
   font-weight: bold;
 }
 
-.alumnos-footer {
-  padding: 32px 0 8px;
-  color: #617d98;
-  font-size: 13px;
+.alumnos-boton:hover {
+  background: #0875ae;
 }
 
-@media (max-width: 600px) {
-  .alumnos {
-    padding: 22px 5%;
-  }
+.alumnos-footer {
+  margin-top: 45px;
+  color: #617d98;
+  text-align: center;
+}
 
+@media (max-width: 650px) {
   .alumnos-grid {
     grid-template-columns: 1fr;
   }

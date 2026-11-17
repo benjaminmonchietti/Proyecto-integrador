@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'TU_SUPABASE_URL'
-const supabaseAnonKey = 'TU_SUPABASE_ANON_KEY'
+const supabaseUrl = 'https://iwuwqcfcvhccvclwpdho.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3dXdxY2ZjdmhjY3ZjbHdwZGhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MDIzNzUsImV4cCI6MjEwNDA3ODM3NX0.C5cNHQHUfaY_vounj9scjTIjNYXrvP_7aKalJn1l7fg'
 
 export const supabase = createClient(
   supabaseUrl,

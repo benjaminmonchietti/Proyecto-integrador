@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 
+
 import { useState } from "react";
 import { Users, ChevronDown } from "lucide-react";
 import "../egresados/global.css";

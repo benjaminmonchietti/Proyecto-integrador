@@ -305,7 +305,7 @@ const slides = [
                 </div>
             ))}
             </div>
-      ))
+            
         <div>
         {/* Flecha izquierda */}
         <button

@@ -19,11 +19,7 @@ export default function CrearSesion() {
       return;
     }
 
-<<<<<<< HEAD
     if (!gmail.toLowerCase().endsWith("@escuelasproa.edu.ar")) {
-=======
-    if (!gmail.toLowerCase().endsWith("@gmail.com")) {
->>>>>>> 9799abfac7cdc8bc5b4d9879a4eb74cdbdfff2e6
       setMensaje("Ingresá una dirección de Gmail válida.");
       return;
     }
@@ -62,11 +58,7 @@ export default function CrearSesion() {
           <input
             id="gmail"
             type="email"
-<<<<<<< HEAD
             placeholder="@escuelasproa.edu.ar"
-=======
-            placeholder="ejemplo@gmail.com"
->>>>>>> 9799abfac7cdc8bc5b4d9879a4eb74cdbdfff2e6
             value={gmail}
             onChange={(e) => setGmail(e.target.value)}
             autoComplete="email"
