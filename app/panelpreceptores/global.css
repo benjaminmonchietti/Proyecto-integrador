@@ -878,7 +878,7 @@ textarea {
     padding: 0;
   }
 }
-```
+
 /* Navegación por cursos y planilla de asistencia */
 .course-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 22px}.course-tab{border:1px solid var(--border);background:#fff;color:var(--navy);border-radius:10px;padding:12px 17px;font-weight:700;cursor:pointer;transition:.18s}.course-tab:hover{background:#edf3ff;border-color:#adc5f9}.course-tab.selected{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 12px #3568d425}#attendanceBody td:nth-child(2){font-weight:600}#attendanceBody select{min-width:160px}#attendanceSaveHint{font-weight:600}@media(max-width:760px){.course-tab{flex:1 1 110px;text-align:center}.course-tabs{gap:7px}}
 
