@@ -1,7 +1,7 @@
 
 "use client";
 
-import "./style.css";
+import "./global.css";
 
 export default function Preceptores() {
   return (

@@ -1,15 +1,31 @@
-
 "use client";
 
+import { supabase } from "../supabase/supabase";
 import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import "./direc.css";
 
-type Estado = "Planificado" | "En desarrollo" | "Finalizado" | "Pausado";
+type Estado =
+  | "Planificado"
+  | "En desarrollo"
+  | "Finalizado"
+  | "Pausado";
+
+type Alcance = "Institucional" | "Por curso";
+
+type Curso = {
+  id: number;
+  nombre: string;
+  anio: number;
+  division: string;
+  etiqueta: string;
+};
 
 type Proyecto = {
   id: number;
+  cursoId: number | null;
   curso: string;
+  institucional: boolean;
   titulo: string;
   objetivo: string;
   materias: string;
@@ -22,14 +38,7 @@ type Proyecto = {
   proximasTareas: string;
 };
 
-const cursos = [
-  "1.º año",
-  "2.º año",
-  "3.º año",
-  "4.º año",
-  "5.º año",
-  "6.º año",
-];
+type FormProyecto = Omit<Proyecto, "id">;
 
 const estados: Estado[] = [
   "Planificado",
@@ -38,8 +47,24 @@ const estados: Estado[] = [
   "Pausado",
 ];
 
-const nuevoProyecto = (curso = "1.º año"): Omit<Proyecto, "id"> => ({
-  curso,
+const estadoDB: Record<Estado, string> = {
+  Planificado: "en_preparacion",
+  "En desarrollo": "en_curso",
+  Finalizado: "finalizado",
+  Pausado: "pausado",
+};
+
+const estadoUI: Record<string, Estado> = {
+  en_preparacion: "Planificado",
+  en_curso: "En desarrollo",
+  finalizado: "Finalizado",
+  pausado: "Pausado",
+};
+
+const nuevoProyecto = (): FormProyecto => ({
+  cursoId: null,
+  curso: "",
+  institucional: false,
   titulo: "",
   objetivo: "",
   materias: "",
@@ -52,20 +77,6 @@ const nuevoProyecto = (curso = "1.º año"): Omit<Proyecto, "id"> => ({
   proximasTareas: "",
 });
 
-function leerProyectos(): Proyecto[] {
-  try {
-    const datos = localStorage.getItem("proa-direc-proyectos");
-
-    if (!datos) return [];
-
-    const proyectos = JSON.parse(datos);
-
-    return Array.isArray(proyectos) ? proyectos : [];
-  } catch {
-    return [];
-  }
-}
-
 function fechaVisible(fecha: string) {
   if (!fecha) return "Sin definir";
 
@@ -76,40 +87,139 @@ function fechaVisible(fecha: string) {
     : fecha;
 }
 
+function convertirProyecto(
+  fila: Record<string, unknown>,
+  cursos: Curso[]
+): Proyecto {
+  const cursoId =
+    fila.curso_id === null || fila.curso_id === undefined
+      ? null
+      : Number(fila.curso_id);
+
+  const cursoEncontrado = cursos.find(
+    (c) => c.id === cursoId
+  );
+
+  const institucional = Boolean(fila.institucional);
+
+  return {
+    id: Number(fila.id),
+    cursoId,
+    curso: institucional
+      ? "Institucional"
+      : cursoEncontrado?.etiqueta || "Curso sin identificar",
+    institucional,
+    titulo: String(fila.titulo || ""),
+    objetivo: String(fila.objetivo || fila.descripcion || ""),
+    materias: String(fila.materias || ""),
+    docente: String(fila.docente || ""),
+    fechaInicio: String(fila.fecha_inicio || ""),
+    fechaFin: String(fila.fecha_fin || ""),
+    estado:
+      estadoUI[String(fila.estado)] || "Planificado",
+    avance: Number(fila.avance || 0),
+    observaciones: String(fila.observaciones || ""),
+    proximasTareas: String(fila.proximas_tareas || ""),
+  };
+}
+
 export default function Direc() {
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);
+  const [cursos, setCursos] = useState<Curso[]>([]);
   const [cargado, setCargado] = useState(false);
+  const [guardando, setGuardando] = useState(false);
+
   const [cursoActivo, setCursoActivo] = useState("Todos");
   const [busqueda, setBusqueda] = useState("");
   const [modalAbierto, setModalAbierto] = useState(false);
   const [editando, setEditando] = useState<number | null>(null);
-  const [form, setForm] = useState<Omit<Proyecto, "id">>(
-    nuevoProyecto()
-  );
+  const [form, setForm] = useState<FormProyecto>(nuevoProyecto());
   const [mensaje, setMensaje] = useState("");
 
-  // Cargar los proyectos guardados al iniciar.
+  const [responsableId, setResponsableId] = useState("");
+
+  // Cargar cursos, usuario y proyectos desde Supabase.
   useEffect(() => {
-    setProyectos(leerProyectos());
-    setCargado(true);
+    async function cargarDatos() {
+      setCargado(false);
+
+      try {
+        const {
+          data: { user },
+          error: errorUsuario,
+        } = await supabase.auth.getUser();
+
+        if (errorUsuario) throw errorUsuario;
+
+        if (!user) {
+          setMensaje("Tenés que iniciar sesión para acceder a esta página.");
+          return;
+        }
+
+        setResponsableId(user.id);
+
+        const { data: cursosDB, error: errorCursos } =
+          await supabase
+            .from("cursos")
+            .select("id, nombre, anio, division")
+            .order("anio", { ascending: true });
+
+        if (errorCursos) throw errorCursos;
+
+        const cursosConvertidos: Curso[] = (cursosDB || []).map(
+          (c: any) => {
+            const nombre =
+              c.nombre || `${c.anio}.º año`;
+
+            const division = c.division
+              ? ` ${c.division}`
+              : "";
+
+            return {
+              id: Number(c.id),
+              nombre,
+              anio: Number(c.anio || 0),
+              division: String(c.division || ""),
+              etiqueta: `${nombre}${division}`,
+            };
+          }
+        );
+
+        setCursos(cursosConvertidos);
+
+        const { data: proyectosDB, error: errorProyectos } =
+          await supabase
+            .from("proyectos")
+            .select("*")
+            .order("fecha_creacion", { ascending: false });
+
+        if (errorProyectos) throw errorProyectos;
+
+        setProyectos(
+          (proyectosDB || []).map((p: any) =>
+            convertirProyecto(p, cursosConvertidos)
+          )
+        );
+      } catch (error: any) {
+        console.error("Error al cargar datos:", error);
+        setMensaje(
+          error.message || "No se pudieron cargar los proyectos."
+        );
+      } finally {
+        setCargado(true);
+      }
+    }
+
+    cargarDatos();
   }, []);
-
-  // Guardar solamente después de haber terminado la carga inicial.
-  useEffect(() => {
-    if (!cargado) return;
-
-    localStorage.setItem(
-      "proa-direc-proyectos",
-      JSON.stringify(proyectos)
-    );
-  }, [proyectos, cargado]);
 
   const filtrados = useMemo(() => {
     const termino = busqueda.toLowerCase().trim();
 
     return proyectos.filter((p) => {
       const coincideCurso =
-        cursoActivo === "Todos" || p.curso === cursoActivo;
+        cursoActivo === "Todos" ||
+        p.curso === cursoActivo;
 
       const texto = [
         p.titulo,
@@ -147,12 +257,15 @@ export default function Direc() {
   function abrirNuevo(curso?: string) {
     setEditando(null);
 
-    setForm(
-      nuevoProyecto(
-        curso ||
-          (cursoActivo === "Todos" ? "1.º año" : cursoActivo)
-      )
+    const seleccionado = cursos.find(
+      (c) => c.etiqueta === curso
     );
+
+    setForm({
+      ...nuevoProyecto(),
+      cursoId: seleccionado?.id ?? null,
+      curso: seleccionado?.etiqueta ?? "",
+    });
 
     setMensaje("");
     setModalAbierto(true);
@@ -167,15 +280,30 @@ export default function Direc() {
     setModalAbierto(true);
   }
 
-  function actualizar<K extends keyof Omit<Proyecto, "id">>(
+  function actualizar<K extends keyof FormProyecto>(
     campo: K,
-    valor: Omit<Proyecto, "id">[K]
+    valor: FormProyecto[K]
   ) {
-    setForm((actual) => ({ ...actual, [campo]: valor }));
+    setForm((actual) => ({
+      ...actual,
+      [campo]: valor,
+    }));
   }
 
-  function guardar(e: FormEvent<HTMLFormElement>) {
+  async function guardar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (guardando) return;
+
+    if (!responsableId) {
+      setMensaje("No se pudo identificar al usuario conectado.");
+      return;
+    }
+
+    if (!form.institucional && !form.cursoId) {
+      setMensaje("Seleccioná un curso para este proyecto.");
+      return;
+    }
 
     if (
       form.fechaInicio &&
@@ -188,55 +316,142 @@ export default function Direc() {
       return;
     }
 
-    const proyecto: Proyecto = {
-      ...form,
-      id: editando ?? Date.now(),
-      avance:
-        form.estado === "Finalizado"
-          ? 100
-          : Math.min(99, Math.max(0, Number(form.avance) || 0)),
+    setGuardando(true);
+    setMensaje("");
+
+    const avance =
+      form.estado === "Finalizado"
+        ? 100
+        : Math.min(100, Math.max(0, Number(form.avance) || 0));
+
+    const datosDB = {
+      titulo: form.titulo.trim(),
+      descripcion: form.objetivo || null,
+      objetivo: form.objetivo || null,
+      materias: form.materias || null,
+      docente: form.docente || null,
+      fecha_inicio: form.fechaInicio || null,
+      fecha_fin: form.fechaFin || null,
+      estado: estadoDB[form.estado],
+      avance,
+      observaciones: form.observaciones || null,
+      proximas_tareas: form.proximasTareas || null,
+      institucional: form.institucional,
+      curso_id: form.institucional ? null : form.cursoId,
+      anio: new Date().getFullYear(),
     };
 
-    if (editando !== null) {
-      setProyectos((actuales) =>
-        actuales.map((p) =>
-          p.id === editando ? proyecto : p
+    try {
+      if (editando !== null) {
+        const { error } = await supabase
+          .from("proyectos")
+          .update(datosDB)
+          .eq("id", editando);
+
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from("proyectos")
+          .insert({
+            ...datosDB,
+            responsable_id: responsableId,
+          });
+
+        if (error) throw error;
+      }
+
+      const { data, error: errorConsulta } = await supabase
+        .from("proyectos")
+        .select("*")
+        .order("fecha_creacion", { ascending: false });
+
+      if (errorConsulta) throw errorConsulta;
+
+      setProyectos(
+        (data || []).map((p: any) =>
+          convertirProyecto(p, cursos)
         )
       );
-    } else {
-      setProyectos((actuales) => [...actuales, proyecto]);
-    }
 
-    setMensaje("");
-    setModalAbierto(false);
-    setEditando(null);
+      setModalAbierto(false);
+      setEditando(null);
+      setForm(nuevoProyecto());
+      setMensaje(
+        editando !== null
+          ? "Proyecto actualizado correctamente."
+          : "Proyecto guardado correctamente."
+      );
+    } catch (error: any) {
+      console.error("Error al guardar:", error);
+      setMensaje(
+        error.message || "No se pudo guardar el proyecto."
+      );
+    } finally {
+      setGuardando(false);
+    }
   }
 
-  function eliminar(id: number) {
-    if (!window.confirm("¿Seguro que querés eliminar este proyecto?")) {
+  async function eliminar(id: number) {
+    if (
+      !window.confirm(
+        "¿Seguro que querés eliminar este proyecto?"
+      )
+    ) {
       return;
     }
 
-    setProyectos((actuales) =>
-      actuales.filter((p) => p.id !== id)
-    );
+    try {
+      const { error } = await supabase
+        .from("proyectos")
+        .delete()
+        .eq("id", id);
 
-    setMensaje("Proyecto eliminado.");
+      if (error) throw error;
+
+      setProyectos((actuales) =>
+        actuales.filter((p) => p.id !== id)
+      );
+
+      setMensaje("Proyecto eliminado correctamente.");
+    } catch (error: any) {
+      console.error("Error al eliminar:", error);
+      setMensaje(
+        error.message || "No se pudo eliminar el proyecto."
+      );
+    }
   }
 
-  function cambiarEstado(id: number, estado: Estado) {
-    setProyectos((actuales) =>
-      actuales.map((p) =>
-        p.id === id
-          ? {
-              ...p,
-              estado,
-              avance:
-                estado === "Finalizado" ? 100 : p.avance,
-            }
-          : p
-      )
-    );
+  async function cambiarEstado(id: number, estado: Estado) {
+    const proyecto = proyectos.find((p) => p.id === id);
+    if (!proyecto) return;
+
+    const avance =
+      estado === "Finalizado" ? 100 : proyecto.avance;
+
+    try {
+      const { error } = await supabase
+        .from("proyectos")
+        .update({
+          estado: estadoDB[estado],
+          avance,
+        })
+        .eq("id", id);
+
+      if (error) throw error;
+
+      setProyectos((actuales) =>
+        actuales.map((p) =>
+          p.id === id
+            ? { ...p, estado, avance }
+            : p
+        )
+      );
+    } catch (error: any) {
+      console.error("Error al cambiar estado:", error);
+      setMensaje(
+        error.message || "No se pudo actualizar el estado."
+      );
+    }
   }
 
   return (
@@ -266,16 +481,22 @@ export default function Direc() {
 
         {cursos.map((curso, i) => (
           <button
-            key={curso}
+            key={curso.id}
             className={`direc-nav ${
-              cursoActivo === curso ? "activo" : ""
+              cursoActivo === curso.etiqueta ? "activo" : ""
             }`}
-            onClick={() => setCursoActivo(curso)}
+            onClick={() => setCursoActivo(curso.etiqueta)}
           >
-            <span className="direc-nav-icon">{i + 1}</span>
-            {curso}
+            <span className="direc-nav-icon">
+              {curso.anio || i + 1}
+            </span>
+            {curso.etiqueta}
             <span className="direc-nav-count">
-              {proyectos.filter((p) => p.curso === curso).length}
+              {
+                proyectos.filter(
+                  (p) => p.cursoId === curso.id
+                ).length
+              }
             </span>
           </button>
         ))}
@@ -297,7 +518,7 @@ export default function Direc() {
             </div>
             <h1>Planificación de proyectos</h1>
             <p>
-              Organización y seguimiento académico de los seis cursos.
+              Organización y seguimiento académico de los cursos.
             </p>
           </div>
 
@@ -385,7 +606,7 @@ export default function Direc() {
           <div className="direc-courses">
             {cursos.map((curso, i) => {
               const lista = proyectos.filter(
-                (p) => p.curso === curso
+                (p) => p.cursoId === curso.id
               );
 
               const completados = lista.filter(
@@ -394,23 +615,31 @@ export default function Direc() {
 
               return (
                 <button
-                  key={curso}
+                  key={curso.id}
                   className={`direc-course-card ${
-                    cursoActivo === curso ? "curso-seleccionado" : ""
+                    cursoActivo === curso.etiqueta
+                      ? "curso-seleccionado"
+                      : ""
                   }`}
-                  onClick={() => setCursoActivo(curso)}
+                  onClick={() =>
+                    setCursoActivo(curso.etiqueta)
+                  }
                 >
                   <div
-                    className={`direc-course-number color-${i + 1}`}
+                    className={`direc-course-number color-${
+                      (i % 6) + 1
+                    }`}
                   >
-                    {i + 1}
+                    {curso.anio || i + 1}
                   </div>
 
                   <div className="direc-course-info">
-                    <strong>{curso}</strong>
+                    <strong>{curso.etiqueta}</strong>
                     <span>
                       {lista.length}{" "}
-                      {lista.length === 1 ? "proyecto" : "proyectos"}
+                      {lista.length === 1
+                        ? "proyecto"
+                        : "proyectos"}
                     </span>
 
                     <div className="direc-course-track">
@@ -455,7 +684,9 @@ export default function Direc() {
               <span>⌕</span>
               <input
                 value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
+                onChange={(e) =>
+                  setBusqueda(e.target.value)
+                }
                 placeholder="Buscar por proyecto, docente o materia..."
               />
 
@@ -534,7 +765,9 @@ export default function Direc() {
                       <div className="direc-progress">
                         <div className="direc-progress-track">
                           <div
-                            style={{ width: `${p.avance}%` }}
+                            style={{
+                              width: `${p.avance}%`,
+                            }}
                           />
                         </div>
                         <span>{p.avance}%</span>
@@ -567,17 +800,24 @@ export default function Direc() {
                     <td colSpan={7}>
                       <div className="direc-empty">
                         <div className="direc-empty-icon">▤</div>
-                        <h3>No hay proyectos para mostrar</h3>
+                        <h3>
+                          {cargado
+                            ? "No hay proyectos para mostrar"
+                            : "Cargando proyectos..."}
+                        </h3>
                         <p>
-                          Agregá un proyecto para comenzar el seguimiento
-                          de este curso.
+                          {cargado
+                            ? "Agregá un proyecto para comenzar el seguimiento."
+                            : "Estamos consultando la base de datos."}
                         </p>
-                        <button
-                          className="direc-button direc-button-primary"
-                          onClick={() => abrirNuevo()}
-                        >
-                          Crear proyecto
-                        </button>
+                        {cargado && (
+                          <button
+                            className="direc-button direc-button-primary"
+                            onClick={() => abrirNuevo()}
+                          >
+                            Crear proyecto
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -633,23 +873,74 @@ export default function Direc() {
 
             <form onSubmit={guardar}>
               <div className="direc-form-grid">
-                <label>
-                  Curso *
+                <label className="direc-full">
+                  Alcance del proyecto *
                   <select
-                    value={form.curso}
-                    onChange={(e) =>
-                      actualizar("curso", e.target.value)
+                    value={
+                      form.institucional
+                        ? "Institucional"
+                        : "Por curso"
                     }
+                    onChange={(e) => {
+                      const institucional =
+                        e.target.value === "Institucional";
+
+                      setForm((actual) => ({
+                        ...actual,
+                        institucional,
+                        cursoId: institucional
+                          ? null
+                          : actual.cursoId,
+                        curso: institucional
+                          ? "Institucional"
+                          : actual.curso,
+                      }));
+                    }}
                   >
-                    {cursos.map((curso) => (
-                      <option key={curso} value={curso}>
-                        {curso}
-                      </option>
-                    ))}
+                    <option value="Por curso">
+                      Proyecto de un curso
+                    </option>
+                    <option value="Institucional">
+                      Proyecto institucional
+                    </option>
                   </select>
                 </label>
 
-                <label>
+                {!form.institucional && (
+                  <label className="direc-full">
+                    Curso *
+                    <select
+                      required
+                      value={form.cursoId ?? ""}
+                      onChange={(e) => {
+                        const id = Number(e.target.value);
+                        const curso = cursos.find(
+                          (c) => c.id === id
+                        );
+
+                        setForm((actual) => ({
+                          ...actual,
+                          cursoId: curso?.id ?? null,
+                          curso: curso?.etiqueta ?? "",
+                        }));
+                      }}
+                    >
+                      <option value="">
+                        Seleccioná un curso
+                      </option>
+                      {cursos.map((curso) => (
+                        <option
+                          key={curso.id}
+                          value={curso.id}
+                        >
+                          {curso.etiqueta}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                )}
+
+                <label className="direc-full">
                   Nombre del proyecto *
                   <input
                     required
@@ -745,7 +1036,10 @@ export default function Direc() {
 
                 <label>
                   Porcentaje de avance:{" "}
-                  {form.estado === "Finalizado" ? 100 : form.avance}%
+                  {form.estado === "Finalizado"
+                    ? 100
+                    : form.avance}
+                  %
                   <input
                     type="range"
                     min="0"
@@ -757,7 +1051,10 @@ export default function Direc() {
                     }
                     disabled={form.estado === "Finalizado"}
                     onChange={(e) =>
-                      actualizar("avance", Number(e.target.value))
+                      actualizar(
+                        "avance",
+                        Number(e.target.value)
+                      )
                     }
                   />
                 </label>
@@ -795,6 +1092,7 @@ export default function Direc() {
                     setModalAbierto(false);
                     setMensaje("");
                   }}
+                  disabled={guardando}
                 >
                   Cancelar
                 </button>
@@ -802,8 +1100,11 @@ export default function Direc() {
                 <button
                   type="submit"
                   className="direc-button direc-button-primary"
+                  disabled={guardando}
                 >
-                  Guardar proyecto
+                  {guardando
+                    ? "Guardando..."
+                    : "Guardar proyecto"}
                 </button>
               </div>
             </form>

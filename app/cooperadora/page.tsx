@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 import "../cooperadora/global.css";
@@ -6,10 +8,6 @@ import "../cooperadora/global.css";
     <Link href="/">Productos</Link>
     <Link href="/contacto">Contacto</Link>
 </nav>
-
-
-"use client";
-
 
 export default function Cooperadora() {
   return (

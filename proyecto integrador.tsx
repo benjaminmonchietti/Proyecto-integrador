@@ -2,7 +2,7 @@
 "use client";
 
 import "./global.css";
-import Direc from "./direc";
+import Direc from "./app/directores/direc";
 import { useState } from "react";
 
 const directivos = [
