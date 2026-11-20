@@ -1,0 +1,9 @@
+PANEL DE PRECEPTORES - COLEGIOS PROA
+
+1. Colocá index.html, style.css y script.js juntos en una carpeta.
+2. Colocá tu archivo de logo en esa misma carpeta con el nombre exacto colegios proa logo.jpg (no se incluye la imagen porque no fue adjuntada).
+3. Abrí index.html con Chrome o Live Server.
+4. En Estudiantes podés cargar el correo de cada familia. En Emails a familias se prepara un correo para revisar y enviar desde el programa de correo del dispositivo.
+5. La asistencia se guarda automáticamente por alumno, curso y fecha en el navegador local.
+
+AVISO: DEMOSTRACIÓN LOCAL. Los DNI, correos y asistencias de menores no deben publicarse en internet. El almacenamiento local no es seguro para uso institucional real. No hay envío automático de emails ni sincronización entre equipos.
